@@ -29,9 +29,83 @@ class Deck:
         return self.cards.pop()   
     
             
+class Player:
+    def __init__(self, name):
+        self.name = name 
+        self.cards = []
 
-card1 = Card('Dimonds', 'Two' )
-deck1 = Deck()
-deck1.shuffle()
-my_card = deck1.deal_one()
-print(my_card)
+    def remove_one(self):
+        return self.cards.pop()
+
+    def add_cards(self, cards):
+        if type(cards) == type([]):
+            self.cards.extend(cards)
+        else:
+            self.cards.append(cards)
+
+    def __str__(self):
+        return f"{self.name} has {len(self.cards)} cards"
+
+
+# game set up 
+player1 = Player('one')
+player2 = Player('two')
+deck = Deck()
+deck.shuffle()
+
+for i in range(26):
+    player1.add_cards(deck.deal_one())
+    player2.add_cards(deck.deal_one())
+
+game_on = True
+round = 0
+while game_on:
+    round += 1
+    print(f"{round} rounds")
+    if len(player1.cards) == 0:
+        print('Player2 wins')
+        game_on = False
+        break
+    if len(player2.cards) == 0:
+        print('Player1 wins')
+        game_on = False
+        break
+    # start a new round
+    player1_cards = []
+    player1_cards.append(player1.remove_one())
+    player2_cards = []
+    player2_cards.append(player2.remove_one())
+
+
+    at_war = True
+    while at_war:
+        
+        if player1_cards[-1].value > player2_cards[-1].value:
+            player1.add_cards(player1_cards)
+            player1.add_cards(player2_cards)
+            at_war = False
+
+        elif player1_cards[-1].value < player2_cards[-1].value:
+            player2.add_cards(player1_cards)
+            player2.add_cards(player2_cards)
+            at_war = False
+
+        else:
+           
+            if len(player1.cards) < 5:
+                print('player 1 unable to declare war, player2 wins')
+                game_on = False
+                break
+            elif len(player2.cards) < 5:
+                print('player 2 unable to declare war, player1 wins')
+                game_on = False
+                break
+            else:
+                for num in range(5):
+                    player1_cards.append(player1.remove_one())
+                    player2_cards.append(player2.remove_one())
+
+
+
+
+
