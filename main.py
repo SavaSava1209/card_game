@@ -4,7 +4,7 @@ import pprint
 suits = ('Hearts', 'Diamonds', 'Spades', 'Clubs')
 ranks = ('Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace')
 values = {'Two':2, 'Three':3, 'Four':4, 'Five':5, 'Six':6, 'Seven':7, 'Eight':8, 
-            'Nine':9, 'Ten':10, 'Jack':11, 'Queen':12, 'King':13, 'Ace':14}
+            'Nine':9, 'Ten':10, 'Jack':11, 'Queen':12, 'King':13, 'Ace':11}
 
 class Card:
     def __init__(self, suit, rank):
@@ -28,6 +28,11 @@ class Deck:
     def deal_one(self):
         return self.cards.pop()   
     
+    def __str__(self):
+        deck_comp = []
+        for card in self.cards:
+            deck_comp.append(card.__str__())
+        return pp.pprint(deck_comp)
             
 class Player:
     def __init__(self, name):
